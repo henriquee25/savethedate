@@ -23,32 +23,6 @@ body, html {
     background-color: #1a1523;
 }
 
-/* BACKGROUND */
-.video-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    background: linear-gradient(135deg, var(--rosa-pastel), var(--lilas-pastel), var(--azul-pastel));
-}
-
-#videoFundo {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(30, 20, 40, 0.4) 100%);
-}
-
 /* TELA DE ENTRADA */
 .tela-entrada {
     position: fixed;
@@ -117,7 +91,7 @@ body, html {
     box-shadow: 0 8px 20px rgba(212, 175, 55, 0.5);
 }
 
-/* CARTÃO PRINCIPAL */
+/* CARTÃO PRINCIPAL E FUNDO DA SEGUNDA PARTE */
 main {
     display: flex;
     justify-content: center;
@@ -125,6 +99,13 @@ main {
     height: 100vh;
     padding: 20px;
     transition: opacity 1s ease;
+    width: 100%;
+    
+    /* IMAGEM DE FUNDO APLICADA AQUI */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('fundo.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
 }
 
 .cartao-bridgerton {
@@ -251,4 +232,116 @@ main {
 @keyframes pulsar {
     0%, 100% { transform: scale(1); }
     50% { transform: scale(1.15); }
+}
+
+/* CLASSE PARA O FADE-OUT DA TELA INICIAL */
+.oculto {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* FUNDO DE ÁRVORES NA TELA DE ENTRADA */
+.tela-entrada {
+    /* Mantenha suas outras configurações aqui, mas mude o background */
+    background-image: linear-gradient(rgba(249,226,237,0.8), rgba(227,213,245,0.8)), url('arvores-intro.jpg');
+    background-size: cover;
+    background-position: center;
+}
+
+/* OCULTAR TELA INICIAL COM FADE */
+.oculto {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* DESIGN E ANIMAÇÃO DAS PÉTALAS */
+.petala {
+    position: absolute;
+    top: -20px;
+    background-color: #ffb7c5; /* Cor rosa da pétala */
+    border-radius: 15px 0 15px 0; /* Formato de folha/pétala */
+    width: 15px;
+    height: 15px;
+    opacity: 0.8;
+    pointer-events: none; /* Para não atrapalhar o clique em outras coisas */
+    animation: cair linear infinite;
+    z-index: 5;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+}
+
+@keyframes cair {
+    0% {
+        transform: translateY(0) rotate(0deg) scale(1);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg) scale(0.5);
+        opacity: 0;
+    }
+}
+
+/* ARBUSTOS QUE ABREM COMO CORTINAS */
+.arbusto {
+    position: absolute;
+    top: 0;
+    width: 50vw; 
+    height: 100vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 1; /* Ficam atrás do texto */
+    transition: transform 1.8s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.5s ease;
+}
+
+.arbusto-esq {
+    left: 0;
+    background-position: right center;
+    background-image: url('arvore-esquerda.png'); 
+}
+
+.arbusto-dir {
+    right: 0;
+    background-position: left center;
+    background-image: url('arvore-direita.png'); 
+}
+
+/* O texto fica por cima das árvores */
+.conteudo-entrada {
+    position: relative;
+    z-index: 5;
+    transition: opacity 0.5s ease;
+}
+
+/* ANIMAÇÃO AO CLICAR */
+.tela-entrada.oculto {
+    background: transparent;
+    pointer-events: none;
+}
+
+.tela-entrada.oculto .conteudo-entrada {
+    opacity: 0; /* O texto some rápido */
+}
+
+.tela-entrada.oculto .arbusto-esq {
+    transform: translateX(-100%); /* Desliza para fora pela esquerda */
+}
+
+.tela-entrada.oculto .arbusto-dir {
+    transform: translateX(100%); /* Desliza para fora pela direita */
+}
+
+/* DESIGN DAS PÉTALAS */
+.petala {
+    position: absolute;
+    top: -20px;
+    border-radius: 50% 0 50% 0; /* Formato real de pétala */
+    width: 14px;
+    height: 18px;
+    opacity: 0.8;
+    pointer-events: none;
+    animation: cair linear infinite;
+    z-index: 5;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
 }
