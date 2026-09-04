@@ -1,0 +1,280 @@
+:root{
+  --plum:#4a2545;
+  --plum-soft:#6b3f61;
+  --rose:#e6a6b8;
+  --rose-deep:#d98aa3;
+  --lilac:#b98fce;
+  --lilac-soft:#cbb0dd;
+  --gold:#c9a24b;
+  --glass:rgba(255,250,247,.86);
+}
+
+*{box-sizing:border-box;}
+
+html,body{
+  margin:0;
+  padding:0;
+  min-height:100vh;
+  font-family:'Cormorant Garamond', serif;
+  color:var(--plum);
+}
+
+body.locked{ overflow:hidden; height:100vh; }
+
+/* ---------- fundo fixo com a foto do jardim ---------- */
+#bg{
+  position:fixed;
+  inset:0;
+  z-index:0;
+  background-image:url('fundo.jpg');
+  background-size:cover;
+  background-position:center;
+}
+#bg::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg, rgba(20,10,25,.28) 0%, rgba(20,10,25,.05) 25%, rgba(20,10,25,.05) 70%, rgba(20,10,25,.35) 100%);
+}
+
+/* ---------- pétalas caindo ---------- */
+#petals{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  overflow:hidden;
+  pointer-events:none;
+}
+.petal{
+  position:absolute;
+  top:-6vh;
+  left:var(--left, 50%);
+  width:var(--size, 10px);
+  height:var(--size, 10px);
+  background:var(--pcolor, var(--rose));
+  border-radius:50% 0 50% 50%;
+  opacity:0;
+  animation:fall var(--duration, 14s) linear infinite;
+  animation-delay:var(--delay, 0s);
+}
+@keyframes fall{
+  0%{ transform:translateY(0) translateX(0) rotate(0deg); opacity:0; }
+  8%{ opacity:.85; }
+  92%{ opacity:.85; }
+  100%{ transform:translateY(112vh) translateX(var(--drift, 40px)) rotate(340deg); opacity:0; }
+}
+
+/* ---------- convite principal ---------- */
+.stage{
+  position:relative;
+  z-index:3;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:8vh 6vw;
+}
+
+.card{
+  position:relative;
+  width:100%;
+  max-width:520px;
+  text-align:center;
+  padding:6vh 6vw 5vh;
+  background:var(--glass);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(201,162,75,.35);
+  border-radius:18px;
+  box-shadow:0 30px 70px rgba(20,10,25,.35);
+  opacity:0;
+  transform:translateY(14px) scale(.98);
+}
+.card.reveal{
+  animation:rise 1.1s cubic-bezier(.2,.7,.3,1) forwards;
+}
+@keyframes rise{
+  to{ opacity:1; transform:translateY(0) scale(1); }
+}
+
+.overline{
+  font-style:italic;
+  font-weight:500;
+  font-size:clamp(1rem, 2vw, 1.15rem);
+  letter-spacing:.14em;
+  color:var(--plum-soft);
+  margin:0 0 1.2rem;
+}
+
+.name{
+  font-family:'Bodoni Moda', serif;
+  font-style:italic;
+  font-weight:500;
+  line-height:.98;
+  margin:0;
+}
+.name .first{
+  display:block;
+  font-size:clamp(3rem, 10vw, 5.4rem);
+}
+.name .last{
+  display:block;
+  font-size:clamp(1.3rem, 4vw, 2.1rem);
+  letter-spacing:.06em;
+  font-style:normal;
+  font-weight:400;
+  color:var(--rose-deep);
+  margin-top:.5rem;
+}
+
+.subtitle{
+  font-size:clamp(1.1rem, 2.2vw, 1.4rem);
+  font-style:italic;
+  color:var(--plum-soft);
+  margin:1.6rem 0 1.8rem;
+}
+
+.date-line{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(1.2rem, 2.8vw, 1.6rem);
+  letter-spacing:.03em;
+  margin:0 0 2.2rem;
+}
+.date-line .sep{ color:var(--gold); padding:0 .5em; }
+
+.countdown{
+  display:flex;
+  justify-content:center;
+  align-items:baseline;
+  gap:clamp(.5rem, 2.6vw, 1.3rem);
+  margin:0 0 2.2rem;
+}
+.count-unit{ display:flex; flex-direction:column; align-items:center; min-width:2.8rem; }
+.count-num{
+  font-family:'Bodoni Moda', serif;
+  font-weight:500;
+  font-size:clamp(1.7rem, 5.4vw, 2.4rem);
+  line-height:1;
+}
+.count-label{
+  font-size:clamp(.65rem, 1.5vw, .8rem);
+  font-style:italic;
+  color:var(--plum-soft);
+  margin-top:.3rem;
+}
+.count-divider{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(1.2rem, 3.6vw, 1.7rem);
+  color:var(--lilac-soft);
+  align-self:flex-start;
+}
+
+.thin-rule{
+  width:min(50%, 150px);
+  height:1px;
+  margin:0 auto 1.8rem;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.music-toggle{
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-size:1rem;
+  color:var(--plum-soft);
+  background:transparent;
+  border:1px solid var(--lilac-soft);
+  border-radius:999px;
+  padding:.6em 1.5em;
+  cursor:pointer;
+  transition:background .25s ease, color .25s ease;
+}
+.music-toggle:hover, .music-toggle:focus-visible{
+  background:var(--lilac-soft);
+  color:var(--plum);
+}
+.music-toggle[aria-expanded="true"]{ background:var(--rose); border-color:var(--rose); }
+
+.music-wrap{
+  max-width:320px;
+  margin:1.1rem auto 0;
+  overflow:hidden;
+  max-height:0;
+  opacity:0;
+  transition:max-height .5s ease, opacity .5s ease;
+}
+.music-wrap.open{ max-height:100px; opacity:1; }
+.music-wrap iframe{ border-radius:12px; width:100%; }
+
+/* ---------- cortina de abertura ---------- */
+.opener{
+  position:fixed;
+  inset:0;
+  z-index:50;
+  background:#1c1220;
+}
+.opener .panel{
+  position:absolute;
+  top:0; bottom:0; width:50%;
+  background:#1c1220;
+  transition:transform 1.15s cubic-bezier(.65,0,.35,1);
+}
+.opener .panel.left{ left:0; }
+.opener .panel.right{ right:0; }
+.opener.open .panel.left{ transform:translateX(-100%); }
+.opener.open .panel.right{ transform:translateX(100%); }
+
+.opener-center{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  z-index:2;
+  text-align:center;
+  padding:0 8vw;
+  transition:opacity .35s ease, transform .35s ease;
+}
+.opener-center.closing{ opacity:0; transform:scale(.96); }
+
+.opener-label{
+  font-style:italic;
+  font-size:clamp(1rem, 2.2vw, 1.2rem);
+  color:#e8d9e5;
+  margin:0 0 .6rem;
+}
+.opener-name{
+  font-family:'Bodoni Moda', serif;
+  font-style:italic;
+  font-weight:500;
+  font-size:clamp(2.6rem, 9vw, 4.2rem);
+  color:#fdf6f2;
+  margin:0 0 2.2rem;
+}
+.open-btn{
+  font-family:'Cormorant Garamond', serif;
+  font-style:italic;
+  font-size:1.05rem;
+  color:#fdf6f2;
+  background:transparent;
+  border:1px solid var(--gold);
+  border-radius:999px;
+  padding:.75em 2em;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:.6em;
+  animation:pulse 2.6s ease-in-out infinite;
+}
+.open-btn:hover, .open-btn:focus-visible{ background:var(--gold); color:#1c1220; }
+.open-btn .seal{ color:var(--gold); font-size:1.1em; }
+@keyframes pulse{
+  0%,100%{ box-shadow:0 0 0 0 rgba(201,162,75,.35); }
+  50%{ box-shadow:0 0 0 10px rgba(201,162,75,0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .petal{ animation:none; opacity:.35; top:20vh; }
+  .opener .panel{ transition:none; }
+  .open-btn{ animation:none; }
+}
