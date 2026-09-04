@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Transição de tela e liberação do som
     btnEntrar.addEventListener("click", () => {
         if (musicaFundo) {
-            musicaFundo.volume = 0.02;
+            musicaFundo.volume = 0.05;
             musicaFundo.play().catch(err => console.log("Áudio aguardando ação:", err));
         }
 
